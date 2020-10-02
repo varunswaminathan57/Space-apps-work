@@ -6,20 +6,30 @@
 #
 #--------------------------------------REQUIRED OUTPUT------------------------------------------
 # SLEEP TIMETABLE, EXCERCISE TIME TABLE , MEAL TIME TABLE [BFAST,LUNCH,DINNER,SNACK{maybe}]
-
+import datetime as dt
 
 
 no_of_days_completed = 0
 
-def find_no_of_days(launch_date,dock_date,undock_date):
+def find_no_of_days(launch_date,launch_time,land_date,land_time,dock_date,dock_time,undock_date,undock_time):
 
     #varun gonna give this function
     
     #return values - integer  = no of days starting from launch to dock in space and dock,undock in iss 
-    #rocketday = launch-dock
-    #issday = dock-undock
-
-
+    #rocketday = launch-dock in hours
+    #issday = dock-undoc in hours
+    #landday = undoc-land in hours
+    rocketday_datesec = (launch_date - dock_date).totalseconds()
+    rocketday_timesec = (launch_time - dock_time).totalseconds() 
+    rocketday = (rocketday_datesec*3600) + (rocketday_timesec*3600)
+    issday_datesec = (dock_date - undock_date).totalseconds()
+    issday_timesec = (dock_time - undock_time).totalseconds()
+    issday = (issday_datesec*3600) + (issday_timesec*3600)
+    landday_datesec = (undock_date - land_date).totalseconds()
+    landday_timesec = (undock_time - undock_time).totalseconds()
+    landday = (landday_datesec*3600) + (landday_timesec*3600)
+              
+              
 def get_daily_timetable(no_of_sleep_hours,no_of_work_hours,sleep_preferred):
 
     timetable_total=[]
@@ -113,9 +123,22 @@ def get_daily_timetable(no_of_sleep_hours,no_of_work_hours,sleep_preferred):
 #for getting inputs
 def solve():
     
-    launch_date = input("Enter launch date")
-    dock_date = input("Enter dock date")
-    undock_date = input("Enter undock date")
+    S1 = input("Enter launch date in DD MM YYYY format")
+    launch_date = datetime.datetime.strptime(S1, "%d %b %Y")
+    S2 = input("Enter launch time in hrs:min:sec")
+    launch_time = datetime.datetime.strptime(S2, "%H:%M:%S")
+    S3 = input("Enter Landing date in DD MM YYYY format")
+    land_date = datetime.datetime.strptime(S3, "%d %b %Y")
+    S4 = input("Enter land time in hrs:min:sec")
+    land_time = datetime.datetime.strptime(S4, "%H:%M:%S")
+    S5 = input("Enter dock date DD MM YYYY format")
+    dock_date = = datetime.datetime.strptime(S5, "%d %b %Y")
+    S6 = input("Enter dock time in hrs:min:sec")
+    dock_time = datetime.datetime.strptime(S6, "%H:%M:%S")
+    S7 = input("Enter undock date in DD MM YYYY format")
+    undock_date = datetime.datetime.strptime(S7, "%d %b %Y")
+    S8 = input("Enter undock time in hrs:min:sec")
+    undock_time = datetime.datetime.strptime(S8, "%H:%M:%S")
 
     no_of_rocketdays,no_of_issdays = find_no_of_days(launch_date,dock_date,undock_date)
 
